@@ -1,0 +1,10 @@
+#! /bin/bash
+
+PROJECT="/Project/Source/"
+DIRECTORY="$HOME$PROJECT$1"
+if [ -d $DIRECTORY ]
+then
+    cd "$DIRECTORY/gecko"
+else
+    echo "Directory not exists"
+fi

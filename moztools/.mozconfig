@@ -1,0 +1,13 @@
+# This is for mac
+
+ac_add_options --enable-debug
+
+#CC="$HOME/icecream/cc"
+#CXX="$HOME/icecream/c++"
+
+ac_add_options --with-google-safebrowsing-api-keyfile=/Users/dlee/.mozbuild/gkey
+ac_add_options --with-macos-sdk=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk
+
+mk_add_options AUTOCLOBBER=1
+
+mk_add_options MOZ_MAKE_FLAGS="-j4"
