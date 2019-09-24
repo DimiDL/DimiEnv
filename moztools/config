@@ -1,0 +1,6 @@
+Host hg.mozilla.org
+  User dlee@mozilla.com
+
+Host *
+  ForwardAgent yes
+  ForwardX11 yes
