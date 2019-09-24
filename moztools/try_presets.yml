@@ -1,0 +1,80 @@
+all:
+  platforms:
+  - all
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - all
+all-win:
+  platforms:
+  - win64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - all
+all-linux:
+  platforms:
+  - linux64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - all
+build:
+  platforms:
+  - all
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - none
+build-win:
+  platforms:
+  - win64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - none
+gtest:
+  platforms:
+  - all
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - gtest
+linux:
+  platforms:
+  - linux64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - all[x64]
+safebrowsing:
+  platforms:
+  - all
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - xpcshell,gtest,mochitests
+safebrowsing-linux:
+  platforms:
+  - linux64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - xpcshell,gtest,mochitests
+safebrowsing-win64:
+  platforms:
+  - win64
+  selector: syntax
+  talos:
+  - none
+  tests:
+  - xpcshell,gtest,mochitests
