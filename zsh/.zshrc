@@ -128,3 +128,9 @@ export FZF_DEFAULT_COMMAND='
 alias vim="stty stop '' -ixoff ; vim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
+
+# TODO Need to test how it works when not via iterm
+# https://stackoverflow.com/questions/12382499/looking-for-altleftarrowkey-solution-in-zsh/31328973#31328973
+bindkey -e
+bindkey '^L' forward-word
+bindkey '^H' backward-word
