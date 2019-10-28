@@ -5,7 +5,7 @@ export PATH=$PATH:/home/dimi/.mozbuild/Arcanist/arcanist/bin/
 export PATH=$PATH:/home/dimi/.mozbuild/git-cinnabar/
 export PATH=$PATH:/home/dimi/.mozbuild/moz-phab/
 export PATH=$PATH:/home/dimi/.mozbuild/android-sdk-macosx/platform-tools/
-export PATH=$PATH:/home/dimi/.dimitools/bin/
+export PATH=$PATH:/home/dimi/dimitools/moztools/bin/
 export PATH=$PATH:/home/dimi/.cargo/bin/
 export PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin/
 

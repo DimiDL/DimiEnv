@@ -17,6 +17,14 @@
 //#define DM_FENTRY() DMLOG("[Dimi]%s >>", __FUNCTION__)
 //#define DM_FEXIT()  DMLOG("[Dimi]%s <<", __FUNCTION__)
 
+function getStackDump() {
+  var lines = [];
+  for (var frame = Components.stack; frame; frame = frame.caller) {
+    lines.push(frame.filename + " (" + frame.lineNumber + ")");
+  }
+  return lines.join("\n");
+}
+
 // begin of the utility anonymous namespace
 namespace {
 

@@ -8,15 +8,8 @@ import sys
 HOME = os.path.expanduser("~")
 
 WORKING_DIRECTORY = [HOME, "Project", "Firefox", "source"]
-DIMI_UTITLTY_DIRECTORY = [HOME, ".dimitools", "bin"]
-
-UTILITY_GETMOZCONFIG = [HOME, ".dimitools", "bin", "getmozconfig.sh"]
-UTILITY_MOZCONFIG = [HOME, ".dimitools", ".mozconfig"]
-
-gCheckPaths = [WORKING_DIRECTORY,
-               DIMI_UTITLTY_DIRECTORY,
-               UTILITY_GETMOZCONFIG,
-               UTILITY_MOZCONFIG]
+WORKING_DIRECTORY_ALTERNATIVE = [HOME, "Firefox", "gecko"]
+DIMI_UTITLTY_DIRECTORY = [HOME, "dimitools", "moztools", "bin"]
 
 USER_EMAIL = "dlee@mozilla.com"
 
@@ -30,17 +23,8 @@ def run_process(cmd):
     return proc.returncode
 
 
-def checkFileExists():
-    checkPaths = [WORKING_DIRECTORY,
-                  DIMI_UTITLTY_DIRECTORY]
-    for path in gCheckPaths:
-        dir = "/".join(path)
-        if not os.path.exists(dir):
-            print("[ERROR]: File(%s) not exists" %(dir))
-            #return False
-        else:
-            print("[OK]:%s exists" %(dir))
-    return True
+def checkFileExists(aFile):
+    return os.path.exists("/".join(aFile))
 
 def createBugWorkingDirectory(bug):
     gotoWorkingDirectory()
@@ -88,6 +72,7 @@ def getBugIdFromInput():
 ########################
 def getWorkingDirectory():
     return "/".join(WORKING_DIRECTORY)
+    dirs = os.listdir(getWorkingDirectory() + "/../")
 
 def gotoWorkingDirectory():
     gotoDirectory(getWorkingDirectory)
@@ -128,7 +113,8 @@ def dumpBranchDescription(branches):
         ret = os.popen("git config branch." + branch + ".description").read().strip()
         if ret == '':
             ret = getSummaryByBugNumber(branch)
-        print('%s : %s' %(branch, ret))
+
+        print('[%8s] %s : %s' %(status[branch] if status[branch] else 'UNKNOWN', branch, ret))
 
 def dumpBranchDescriptionMore(branches):
     gotoWorkingDirectory()
@@ -139,6 +125,8 @@ def dumpBranchDescriptionMore(branches):
             continue
         cmd = ['git', 'config', 'branch.' + branch + '.description']
         ret = os.popen("git config branch." + branch + ".description").read().strip()
+        if ret == '':
+            ret = getSummaryByBugNumber(branch)
 
         print('[%8s] %s : %s' %(status[branch] if status[branch] else 'UNKNOWN', branch, ret))
 
@@ -231,14 +219,24 @@ def getBugNumberByLocalId(localId, user_email = USER_EMAIL):
 #
 # Command
 ########################
+def init():
+    global WORKING_DIRECTORY
+    if not checkFileExists(WORKING_DIRECTORY):
+        if checkFileExists(WORKING_DIRECTORY_ALTERNATIVE):
+            WORKING_DIRECTORY = WORKING_DIRECTORY_ALTERNATIVE
+        else:
+            print("[Error]Init fail, file(%s) doesn't exist" %(WORKING_DIRECTORY))
+
+    if not checkFileExists(DIMI_UTITLTY_DIRECTORY):
+        print("[Error]Init fail, file(%s) doesn't exist" %(DIMI_UTITLTY_DIRECTORY))
+
 def workOnBug(bug, user_email = USER_EMAIL):
     if bug == None:
         showAssignedBugByUser(USER_EMAIL)
         bug = getBugNumberByLocalId(getBugIdFromInput())
 
     print("Working on bug %s"%(bug))
-
-    checkFileExists()
+    print("[OK]Use %s as working directory" %(WORKING_DIRECTORY))
 
     if os.path.exists(getBugWorkingDirectory(bug)):
         con = raw_input("We already have the directory, continue? [y/g/N]")
@@ -277,6 +275,8 @@ def parse_argument(args):
     if len(args) >= 2:
         cmd = args[1]
 
+    init()
+
     if cmd == None:
         workOnBug(None)
     elif cmd == '-h':
@@ -302,6 +302,4 @@ def parse_argument(args):
 
 if __name__ == '__main__':
     parse_argument(sys.argv)
-
-
 

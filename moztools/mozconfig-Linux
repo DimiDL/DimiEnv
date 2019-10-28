@@ -1,0 +1,7 @@
+ac_add_options --enable-debug
+
+ac_add_options --with-google-safebrowsing-api-keyfile=/home/dimi/.mozbuild/gkey
+ac_add_options CCACHE=/home/dimi/.cargo/bin/sccache
+mk_add_options AUTOCLOBBER=1
+
+mk_add_options MOZ_MAKE_FLAGS="-j200"

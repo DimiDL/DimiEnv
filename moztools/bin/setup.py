@@ -8,7 +8,7 @@ import re
 
 HOME = os.path.expanduser("~")
 MOZ_BUILD = HOME + "/.mozbuild"
-DIMI_TOOLS = HOME + '/.dimitools'
+DIMI_TOOLS = HOME + '/dimitools/moztools/'
 
 def run_process(cmds):
     for cmd in cmds:
