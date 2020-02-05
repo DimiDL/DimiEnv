@@ -111,21 +111,29 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set hlsearch
-set backspace=indent,eol,start
-set splitright
 
-inoremap ( ()<Esc>i
-inoremap " ""<Esc>i
-inoremap ' ''<Esc>i
-inoremap [ []<Esc>i
-inoremap {<CR> {<CR>}<Esc>ko
-imap <C-D> <C-O>x
+set ignorecase
+set smartcase
+
+set nois
+set pastetoggle=<F3>
+
+" This setting fix the issue when xargs -o vim -p cannot open
+" more than 10 tabs
+set tabpagemax=100
+
 
 set ls=2
 set statusline=%<%f\ %m%=\ %h%r\ %-19([%p%%]\ %3l,%02c%03V%)%y
 highlight StatusLine term=bold,reverse cterm=bold,reverse
 
-" Highlight trailing white space "
+" Change leader key to space)
+let mapleader = "\<Space>"
+
+""""""""""""""""""""""""""""""""""
+" Setting to help code
+""""""""""""""""""""""""""""""""""
+" Highlight trailing white space
 highlight ExtraWhitespace ctermbg=red guibg=red
 ""match ExtraWhitespace /\s\+$\| \+\ze\t/
 " in office pc BufWinEnter not working"
@@ -134,15 +142,12 @@ augroup RedudantWhiteSpace
   autocmd BufWinLeave * call clearmatches()
 augroup END
 
-set ignorecase
-set smartcase
-
-set nois
-set pastetoggle=<F3>
-
-" Dimi's hot key
-" (Change leader key to space)
-let mapleader = "\<Space>"
+inoremap ( ()<Esc>i
+inoremap " ""<Esc>i
+inoremap ' ''<Esc>i
+inoremap [ []<Esc>i
+inoremap {<CR> {<CR>}<Esc>ko
+imap <C-D> <C-O>x
 
 " (Quick Save)
 " But ctrl-s is flow control, so to make this work
@@ -155,55 +160,36 @@ let mapleader = "\<Space>"
 "     command vim "$@"
 "     stty "$STTYOPTS"
 " }
-
 nmap <C-s> :w<CR>
 imap <C-s> <ESC>:w<CR>
 
-" (Move/Action in Tab/Window)
-" (Split window)
-nmap <C-j> :bot new<CR>
-nmap <C-k> :new<CR>
-nmap <C-l> :rightb vnew<CR>
-nmap <C-h> :lefta vnew<CR>
 
-" (New/Move tab)
-nmap <S-t>     :tabnew<CR>
-nmap <S-c>     :q!<CR>
-nmap <S-h>     :tabprevious<CR>
-nmap <S-l>     :tabnext<CR>
-nmap <S-tab>   :tabnext<CR>
-imap <S-tab>   <Esc>:tabnext<CR>i
-" this affect t"
-""inoremap <S-t>     <Esc>:tabnew<CR>
-
-"nmap <S-j> <C-w>j
-"nmap <S-k> <C-w>k
-"nmap <S-l> <C-w>l
-"nmap <S-h> <C-w>h
-
-" [Plugin] YouCompleteMe key mapping
+""""""""""""""""""""""""""""""""""
+" YouCompleteMe Plugin
+""""""""""""""""""""""""""""""""""
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 
-" (Disable syntax check)
+" Disable syntax check
 let g:ycm_show_diagnostics_ui = 0
 
-" (Disable preview window)"
+" Disable preview window
 let g:ycm_autoclose_preview_window_after_completion = 1
 
-" [Plugin] easymotion key mapping "
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
+""""""""""""""""
+" EasyMotion Plugin
+""""""""""""""""
+" Disable default mapping
+let g:EasyMotion_do_mapping = 0
 
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-" (Use this for usual move)
+" `s{char}{label}` (Use this for usual move)
 nmap s <Plug>(easymotion-overwin-f)
 
-" Move to line
-" (Use this for line movement)
+" Move to line (Use this for line movement)
 map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
@@ -219,25 +205,66 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 map  <Leader>s <Plug>(easymotion-sn)
 omap <Leader>s <Plug>(easymotion-tn)
 
-"[Plugin] NerdTree key mapping "
-map <F2> :NERDTreeTabsToggle<CR>
-
-" Ignore files
+" Hot key to play macro from register q
+map <Leader>q 1@q
+""""""""""""""""
+" NerdTree Plugin
+""""""""""""""""
+" config file extensions to be ignored
 let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 
-"[Plugin] FuzzyFinder key mapping "
+""""""""""""""""
+"[FuzzyFinder Plugin]
+""""""""""""""""
 map ff <ESC>:FZF --reverse<CR>
 map gff <ESC>:GFiles?<CR>
 map cff <ESC>:Commits<CR>
-"let g:fuf_dir_exclude = '\v.(foo)'
-
 let g:fzf_layout = { 'down': '30%' }
 
-"Map function key
+""""""""""""""""
+"[Git Fugitive Plugin]
+" https://stackoverflow.com/questions/15407652/how-can-i-run-git-diff-staged-with-fugitive
+""""""""""""""""
+" testing..
+" Add a hot key to review all staged changes
+command Greview :Git! diff --staged
+nnoremap <leader>gr :Greview<cr>
+
+""""""""""""""""
+"[Hot Keys]
+""""""""""""""""
+" Global hotkeys
+
+" Function keys"
+" Toggle NerdTree
+map <F2> :NERDTreeTabsToggle<CR>
+
 map <F3> :tabdo e<CR>
+
+" Save the changes in this tab
 map <F4> :tabdo w<CR>
 
+" Movment hot keys
+" (Move/Action in Tab/Window)
+" (Split window)
+nmap <C-j> :bot new<CR>
+nmap <C-k> :new<CR>
+nmap <C-l> :rightb vnew<CR>
+nmap <C-h> :vnew<CR>
+
+" (New/Move tab)
+nmap <S-t>     :tabnew<CR>
+nmap <S-c>     :q!<CR>
+nmap <S-h>     :tabprevious<CR>
+nmap <S-l>     :tabnext<CR>
+nmap <S-tab>   :tabnext<CR>
+imap <S-tab>   <Esc>:tabnext<CR>i
+" this affect t"
+""inoremap <S-t>     <Esc>:tabnew<CR>
+
+""""""""""""""""
 "[Firefox]This is for firefox only >>>
+""""""""""""""""
 let g:EnableFirefoxBuildMapping = 1
 
 augroup vimrc
