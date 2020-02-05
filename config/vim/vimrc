@@ -252,3 +252,18 @@ augroup END
 map debug :vsplit ~/.dimitools/DimiUtility.h<CR>
 map build :vert sb "Quickfix List"
 autocmd BufRead,BufNewFile *.sjs set filetype=javascript
+
+""""""""""""""""
+"[Mark Plugin] Give Mark more color
+""""""""""""""""
+highlight MarkWord1 ctermbg=Cyan ctermfg=Black guibg=#8CCBEA guifg=Black
+highlight MarkWord2 ctermbg=Green ctermfg=Black guibg=#A4E57E guifg=Black
+highlight MarkWord4 ctermbg=Red ctermfg=Black guibg=#FF7272 guifg=Black
+highlight MarkWord5 ctermbg=Magenta ctermfg=Black guibg=#FFB3FF guifg=Black
+highlight MarkWord6 ctermbg=Blue ctermfg=Black guibg=#9999FF guifg=Black
+highlight MarkWord3 ctermbg=DarkYellow ctermfg=Black guibg=#FFB971 guifg=Black
+highlight MarkWord7 ctermbg=LightCyan ctermfg=Black guibg=#98D8B4 guifg=Black
+highlight MarkWord8 ctermbg=LightGreen ctermfg=Black guibg=#D1E078 guifg=Black
+highlight MarkWord9 ctermbg=LightRed ctermfg=Black guibg=#FF92B8 guifg=Black
+highlight MarkWord10 ctermbg=LightBLue ctermfg=Black guibg=#CCA6FF guifg=Black
+highlight MarkWord11 ctermbg=DarkBlue ctermfg=Black guibg=#93B2F5 guifg=Black
