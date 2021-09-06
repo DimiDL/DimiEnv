@@ -1,0 +1,249 @@
+##########################################################################
+#                            Dimi Snippets                                #
+###########################################################################
+
+priority -50
+
+snippet mozassert "MozAssert" b
+MOZ_ASSERT($1);
+endsnippet
+
+snippet refptr "GetRefPtr" b
+RefPtr<$1> $2 = $3;
+if (!$2) {
+  return $4;
+}
+endsnippet
+
+snippet comptr "GetCOMPtr" b
+nsCOMPtr<$1> $2 = $3;
+if (!$2) {
+  return $4;
+}
+endsnippet
+
+snippet queryi "Dimi's query interface'" b
+nsCOMPtr<$1> $2 = do_QueryInterface($3, &rv);
+if (!$2) {
+  return ${4:NS_ERROR_FAILURE};
+}
+endsnippet
+
+snippet tarray "Loop nsTArray" b
+for (size_t ${2:i} = 0; $2 < $1.Length(); $2++) {
+  $3
+}
+endsnippet
+
+snippet nswarn "nswarn" b
+$2rv = $1;
+if (NS_WARN_IF(NS_FAIL(rv))) {
+  return rv;
+}
+endsnippet
+
+snippet elog "Enable Dimi's Log Module" b
+static mozilla::LazyLogModule sLogger("DimiLog");
+#define DDLOG(args) MOZ_LOG(sLogger, mozilla::LogLevel::Debug, args)
+
+endsnippet
+
+snippet mozlog "Moz Log" b
+MOZ_LOG}(("$1"));
+endsnippet
+
+snippet log "Dimi's Log" b
+${2:DDLOG}(("$1"));
+endsnippet
+
+snippet lof "Dimi's Log with fn name" b
+DDLOG(("[%s]:$1", __func__));
+endsnippet
+
+snippet slog "Dimi's StrLog" b
+DDLOG(("$1 = %s", $1.get()));
+endsnippet
+
+snippet slof "Dimi's StrLog with fn name" b
+DDLOG(("[%s]:$1 = %s", __func__, $1.get()));
+endsnippet
+
+snippet aslog "Dimi's ACStrLog" b
+DDLOG(("$1 = %s", $1.BeginReading()));
+endsnippet
+
+snippet aslof "Dimi's ACStrLog with fn name" b
+DDLOG(("$1 = %s", $1.BeginReading()));
+endsnippet
+
+snippet prilog "Dimi's PrincipalLog'" b
+if (${1:aPrincipal}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("Principal's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet urilog "Dimi's UriLog'" b
+DDLOG(("URI is %s", $1 ? $1->GetSpecOrDefault().get() : "null"));
+endsnippet
+
+snippet urilof "Dimi's UriLog with fn name" b
+DDLOG(("[%s]URI is %s", __func__, $1 ? $1->GetSpecOrDefault().get() : "null"));
+endsnippet
+
+snippet chlog "Dimi's ChLog with fn name" b
+if (${1:aChannel}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("Channel's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet chlof "Dimi's ChLog with fn name" b
+if (${1:aChannel}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("[%s]Channel's URI is %s", __func__, uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet doclog "Dimi's DocLog" b
+if (${1:aDocument}) {
+  nsCOMPtr<nsIURI> uri = $1->GetDocumentURI();
+  if (uri) {
+    DDLOG(("Document's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet doclof "Dimi's DocLog with fn name" b
+if (${1:aDocument}) {
+  nsCOMPtr<nsIURI> uri = $1->GetDocumentURI();
+  if (uri) {
+    DDLOG(("[%s]Document's URI is %s", __func__, uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+########
+# snippet\ \(.*\)\ \"\(.*\)\"\ b
+# s/snippet\ \(.*\)\ \"\(.*\)\"\ b/snippet\ xx\1\ \"\2\"\ bA/
+#######l
+
+snippet xxelog "Enable Dimi's Log Module" bA
+static mozilla::LazyLogModule sLogger("DimiLog");
+#define DDLOG(args) MOZ_LOG(sLogger, mozilla::LogLevel::Debug, args)
+
+endsnippet
+
+snippet xxeselog "Enable Dimi's std err log" bA
+#define DDLOG(args) printf_stderr args
+
+endsnippet
+
+snippet xxlog "Dimi's Log" bA
+${2:DDLOG}(("$1"));
+endsnippet
+
+snippet xxlof "Dimi's Log with fn name" bA
+DDLOG(("[%s]:$1", __func__));
+endsnippet
+
+snippet xxslog "Dimi's StrLog" bA
+DDLOG(("$1 = %s", $1.get()));
+endsnippet
+
+snippet xxslof "Dimi's StrLog with fn name" bA
+DDLOG(("[%s]:$1 = %s", __func__, $1.get()));
+endsnippet
+
+snippet xxaslog "Dimi's ACStrLog" bA
+DDLOG(("$1 = %s", $1.BeginReading()));
+endsnippet
+
+snippet xxaslof "Dimi's ACStrLog with fn name" bA
+DDLOG(("$1 = %s", $1.BeginReading()));
+endsnippet
+
+snippet xxprilog "Dimi's PrincipalLog'" bA
+if (${1:aPrincipal}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("Principal's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet xxurilog "Dimi's UriLog'" bA
+DDLOG(("URI is %s", $1 ? $1->GetSpecOrDefault().get() : "null"));
+endsnippet
+
+snippet xxurilof "Dimi's UriLog with fn name" bA
+DDLOG(("[%s]URI is %s", __func__, $1 ? $1->GetSpecOrDefault().get() : "null"));
+endsnippet
+
+snippet xxchlog "Dimi's ChLog with fn name" bA
+if (${1:aChannel}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("Channel's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet xxchlof "Dimi's ChLog with fn name" bA
+if (${1:aChannel}) {
+  nsCOMPtr<nsIURI> uri;
+  $1->GetURI(getter_AddRefs(uri));
+  if (uri) {
+    DDLOG(("[%s]Channel's URI is %s", __func__, uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet xxdoclog "Dimi's DocLog" bA
+if (${1:aDocument}) {
+  nsCOMPtr<nsIURI> uri = $1->GetDocumentURI();
+  if (uri) {
+    DDLOG(("Document's URI is %s", uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet xxdoclof "Dimi's DocLog with fn name" bA
+if (${1:aDocument}) {
+  nsCOMPtr<nsIURI> uri = $1->GetDocumentURI();
+  if (uri) {
+    DDLOG(("[%s]Document's URI is %s", __func__, uri->GetSpecOrDefault().get()));
+  }
+}
+endsnippet
+
+snippet xxqueryi "Dimi's query interface'" bA
+nsCOMPtr<$1> $2 = do_QueryInterface($3, &rv);
+if (!$2) {
+  return ${4:NS_ERROR_FAILURE};
+}
+endsnippet
+
+snippet xxtarray "Loop nsTArray" bA
+for (size_t ${2:i} = 0; $2 < $1.Length(); $2++) {
+  $3
+}
+endsnippet
+
+snippet xxnswarn "nswarn" bA
+$2rv = $1;
+if (NS_WARN_IF(NS_FAIL(rv))) {
+  return rv;
+}
+endsnippet
