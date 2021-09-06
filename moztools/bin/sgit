@@ -1,0 +1,36 @@
+#! /bin/bash
+
+if [ $1 == '-h' ]
+then
+    echo "unmerged (u)"
+    echo "modified (m)"
+    echo "commit"
+    echo "untracked"
+    echo "staged"
+elif [ $1 == 'unmerged' ] || [ $1 == 'u' ]
+then
+    cmd='git diff -name-status --name-only --diff-filter=U'
+elif [ $1 == 'modified' ] || [ $1 == 'm' ]
+then
+    cmd='git ls-files -m'
+elif [ $1 == 'commit' ] || [ $1 == 'c' ]
+then
+    if [ $2 ]
+    then
+        cmd="git diff-tree --no-commit-id --name-only -r $2"
+    else
+        cmd='git diff-tree --no-commit-id --name-only -r HEAD'
+    fi
+elif [ $1 == 'untracked' ]
+then
+    cmd='git ls-files --others --exclude-standard -z'
+elif [ $1 == 'staged' ] || [ $1 == 's' ]
+then
+    cmd='git diff —name-only —cached'
+else
+    echo "Unknown Input..."
+    exit
+fi
+
+to='xargs -o vim -p'
+eval "$cmd | $to"

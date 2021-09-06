@@ -18,7 +18,7 @@ EndSetup
 BeginSetup "git"
 # sudo apt-get install git
 git config --global user.email dlee@mozilla.com
-git config user.name DimiDL
+git config user.name Dimi Lee
 
 BeginSetup "vim"
 VIM_RC_PATH="$HOME/.vim"
