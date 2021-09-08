@@ -5,6 +5,7 @@ export PATH=$PATH:/Users/dlee/.mozbuild/Arcanist/arcanist/bin/
 export PATH=$PATH:/Users/dlee/.mozbuild/git-cinnabar/
 export PATH=$PATH:/Users/dlee/.mozbuild/moz-phab/
 export PATH=$PATH:/Users/dlee/.mozbuild/android-sdk-macosx/platform-tools/
+export PATH=$PATH:/Users/dlee/.mozbuild/
 export PATH=$PATH:/Users/dlee/.dimitools/bin/
 export PATH=$PATH:/Users/dlee/.cargo/bin/
 export PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin/

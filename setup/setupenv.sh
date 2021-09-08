@@ -20,23 +20,26 @@ BeginSetup "git"
 git config --global user.email dlee@mozilla.com
 git config user.name Dimi Lee
 
+BeginSetup "mercurial"
+sudo apt-get install mercurial
+
 BeginSetup "vim"
 VIM_RC_PATH="$HOME/.vim"
-mkdir -p $VIM_RC_PATH
+
+# TODO: cp vim rc
 
 sudo apt-get install vim
 git config --global core.editor vim
 git config --global core.pager 'less -FRX'
 
 if [ ! -e $VIM_RC_PATH ] ; then
+  BeginSetup "vim plugins"
 #todo
 #Plugin 'inkarkat/vim-ingo-library'
 #Plugin 'inkarkat/vim-mark'
-
-	cd $VIM_RC_PATH
 	git clone https://github.com/DimiL/vim $VIM_RC_PATH
 
-  BeginSetup "vim plugins"
+  cd $VIM_RC_PATH
 
 	git submodule init
 	git submodule update
@@ -61,8 +64,11 @@ fi
 
 
 BeginSetup "open ssh"
-# sudo apt-get install openssh-server
-# sudo service ssh restart
+sudo apt-get install openssh-server
+sudo service ssh restart
+
+#TODO: setup putting id_ras.pub to remote's authorized_keys
+# See https://www.debian.org/devel/passwordlessssh
 
 # Mozilla Build
 # TODO : put gkey in mozbuild
@@ -73,8 +79,8 @@ BOOTSTRAP="https://hg.mozilla.org/mozilla-central/raw-file/default/python/mozboo
 BOOTSTRAP_PATH="$HOME/Downloads/bootstrap.py"
 
 #[ -e $BOOTSTRAP_PATH ] && rm $BOOTSTRAP_PATH
-#wget $BOOTSTRAP -O ~/Downloads/bootstrap.py
-#python ~/Downloads/bootstrap.py --vcs=git
+wget $BOOTSTRAP -O ~/Downloads/bootstrap.py
+python ~/Downloads/bootstrap.py --vcs=git
 
 FIREFOX_PROJECT_PATH="$HOME/Firefox"
 FIREFOX_MOZBUILD_PATH="$HOME/.mozbuild"
@@ -87,11 +93,12 @@ if [ ! -e $FIREFOX_MOZBUILD_PATH/git-cinnabar ] ; then
 	git clone "https://github.com/glandium/git-cinnabar" $FIREFOX_MOZBUILD_PATH
 fi
 
-export PATH="$PATH:$FIREFOX_MOZBUILD_PATH/git-cinnabar"
+#export PATH="$PATH:$FIREFOX_MOZBUILD_PATH/git-cinnabar"
 #git cinnabar download
 
 if [ ! -e $FIREFOX_PROJECT_PATH/gecko ] ; then
-        mkdir -p $FIREFOX_PROJECT_PATH/gecko
+  BeginSetup "gecko"
+  mkdir -p $FIREFOX_PROJECT_PATH/gecko
 	git clone hg::https://hg.mozilla.org/mozilla-unified $FIREFOX_PROJECT_PATH/gecko
 
 	cd $FIREFOX_PROJECT_PATH/gecko
@@ -149,8 +156,9 @@ fi
 OH_MY_ZSH_PATH="$HOME/.oh-my-zsh"
 ZSH_PURE_THEM_PATH="$HOME/.zsh/pure"
 
-if [ ! -e $FIREFOX_PROJECT_PATH/gecko ] ; then
-  sudo apt-get install cargo
+sudo apt install zsh
+
+if [ ! -e $OH_MY_ZSH_PATH ] ; then
   sh -c "$(wget -O- https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
