@@ -1,3 +1,11 @@
 snippet xxdump "Add debug message" bA
-dump("[Dimi]$1\n");
+dump("[Dimi]:$1\n");
+endsnippet
+
+snippet xxjsdump "Add debug message" bA
+dump("[Dimi]:$1" + JSON.stringify($2) + "\n");
+endsnippet
+
+snippet xxjsy "JSON stingify" bA
+JSON.stringify($1);
 endsnippet
