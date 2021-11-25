@@ -1,19 +1,20 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export PATH=$PATH:/Users/dlee/.mozbuild/Arcanist/arcanist/bin/
-export PATH=$PATH:/Users/dlee/.mozbuild/git-cinnabar/
-export PATH=$PATH:/Users/dlee/.mozbuild/moz-phab/
-export PATH=$PATH:/Users/dlee/.mozbuild/android-sdk-macosx/platform-tools/
-export PATH=$PATH:/Users/dlee/.mozbuild/
-export PATH=$PATH:/Users/dlee/.dimitools/bin/
-export PATH=$PATH:/Users/dlee/.cargo/bin/
+export PATH=$PATH:/home/dimi/.mozbuild/Arcanist/arcanist/bin/
+export PATH=$PATH:/home/dimi/.mozbuild/git-cinnabar/
+export PATH=$PATH:/home/dimi/.mozbuild/moz-phab/
+export PATH=$PATH:/home/dimi/.mozbuild/android-sdk-macosx/platform-tools/
+export PATH=$PATH:/home/dimi/dimitools/moztools/bin/
+export PATH=$PATH:/home/dimi/.cargo/bin/
 export PATH=$PATH:/usr/local/opt/coreutils/libexec/gnubin/
+export PATH=$PATH:/home/dimi/.local/bin
 
 export CCACHE_COMPRESS=""
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/dlee/.oh-my-zsh"
+export ZSH="/home/dimi/.oh-my-zsh"
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -79,7 +80,7 @@ plugins=(
   zsh-syntax-highlighting osx
 )
 
-source $ZSH/oh-my-zsh.sh
+source $HOME/.oh-my-zsh/oh-my-zsh.sh
 
 # User configuration
 
@@ -102,6 +103,7 @@ fi
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # PURE theme
+fpath+=("$HOME/.zsh/pure")
 ZSH_THEME=""
 autoload -U promptinit; promptinit
 prompt pure
@@ -119,7 +121,7 @@ PURE_CMD_MAX_EXEC_TIME=10
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export FZF_DEFAULT_COMMAND='
   (git ls-tree -r --name-only HEAD ||
@@ -129,9 +131,3 @@ export FZF_DEFAULT_COMMAND='
 alias vim="stty stop '' -ixoff ; vim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
-
-# TODO Need to test how it works when not via iterm
-# https://stackoverflow.com/questions/12382499/looking-for-altleftarrowkey-solution-in-zsh/31328973#31328973
-bindkey -e
-bindkey '^L' forward-word
-bindkey '^H' backward-word

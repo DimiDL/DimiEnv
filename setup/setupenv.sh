@@ -50,6 +50,8 @@ if [ ! -e $VIM_RC_PATH ] ; then
   sudo apt-get install cmake
   $YOUCOMPLETEME_PATH/install.py --clang-completer
 
+  #TODO
+  # cp /dimitools/vim/ultiSnpis to ~/.vimi/UltiSnips
 fi
 
 # Fuzzy Finder
